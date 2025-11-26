@@ -1,177 +1,271 @@
 <!doctype html>
 <html lang="id">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>Motivasi Harian — Cute Mode</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <title>Spiritus</title>
 
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <style>
-    .msg {
-      opacity: 0;
-      transform: translateY(6px);
-      transition: all .5s ease;
-      position: absolute;
-      left: 0; right: 0;
-    }
-    .msg.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
-</head>
+    <style>
+      .msg {
+        opacity: 0;
+        transform: translateY(6px);
+        transition: all 0.5s ease;
+        position: absolute;
+        left: 0;
+        right: 0;
+      }
+      .msg.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
 
-<body class="bg-gradient-to-b from-blue-100 to-pink-100 min-h-screen flex items-center justify-center p-4 relative">
+  <body
+    class="bg-gradient-to-b from-blue-100 to-pink-100 min-h-screen flex items-center justify-center p-4 relative"
+  >
+    <!-- MOBILE FRAME -->
+    <div
+      class="w-[390px] h-[780px] max-w-full rounded-3xl shadow-2xl overflow-hidden bg-white/40 backdrop-blur-lg border border-white/40 flex flex-col"
+    >
+      <header class="flex items-center gap-3 px-5 py-4">
+        <div>
+          <div class="font-semibold text-gray-800 text-base">
+            元気でいらっしゃってよかったです!
+          </div>
+          <div class="text-xs text-gray-500">Good to know you doing well!</div>
+        </div>
+      </header>
 
-  <!-- MOBILE FRAME -->
-  <div class="w-[390px] h-[780px] max-w-full rounded-3xl shadow-2xl overflow-hidden bg-white/40 backdrop-blur-lg border border-white/40 flex flex-col">
+      <!-- MAIN -->
+      <main class="flex-1 px-5 flex flex-col gap-4 justify-center">
+        <div
+          class="relative bg-white/70 backdrop-blur-md border border-white/60 rounded-2xl p-5 shadow-lg min-h-[130px]"
+        >
+          <div id="greeting" class="text-lg font-bold text-blue-700 mb-2">
+            Halo!
+          </div>
+          <div class="text-gray-700 relative min-h-[60px]">
+            <div id="messages-wrapper" class="relative w-full"></div>
+          </div>
+        </div>
 
-    <!-- HEADER -->
-    <header class="flex items-center gap-3 px-5 py-4">
-      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-md">
-        MH
-      </div>
-      <div>
-        <div class="font-semibold text-gray-800 text-base">Motivasi Harian</div>
-        <div class="text-xs text-gray-500">Cute, pastel, dan adem</div>
-      </div>
-    </header>
+        <div
+          class="bg-white/70 backdrop-blur-md border border-white/60 rounded-2xl p-3 text-center shadow-md"
+        >
+          <img
+            id="cuteImage"
+            src=""
+            class="w-32 h-32 rounded-lg mx-auto transition-opacity duration-500 opacity-0"
+          />
+        </div>
+      </main>
 
-    <!-- MAIN -->
-    <main class="flex-1 px-5 flex flex-col gap-4 justify-center">
+      <footer
+        class="text-center text-gray-500 text-xs py-3 border-t border-white/40 backdrop-blur-md"
+      >
+        &copy; <span id="year"></span> Johanes Arya
+      </footer>
+    </div>
 
-      <div class="relative bg-white/70 backdrop-blur-md border border-white/60 rounded-2xl p-5 shadow-lg min-h-[130px]">
-        <div id="greeting" class="text-lg font-bold text-blue-700 mb-2">Halo!</div>
-        <div class="text-gray-700 relative min-h-[60px]">
-          <div id="messages-wrapper" class="relative w-full"></div>
+    <audio id="bgMusic" loop>
+      <source src="asset/music.mp3" type="audio/mp3" />
+    </audio>
+
+    <!-- MODAL -->
+    <div
+      id="modal"
+      class="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center px-5"
+    >
+      <div
+        class="w-full max-w-xs bg-white/90 rounded-xl shadow-xl p-5 border border-white/60"
+      >
+        <h3 class="text-gray-800 font-semibold text-base mb-1">
+          Hai! Siapa namamu?
+        </h3>
+        <p class="text-gray-500 text-sm mb-3">
+          Masukkan nama agar kami bisa menyapamu dengan hangat.
+        </p>
+
+        <div class="flex gap-2 mb-2">
+          <input
+            id="nameInput"
+            type="text"
+            class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300 outline-none"
+            placeholder="Nama kamu..."
+          />
+          <button
+            id="startBtn"
+            class="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-semibold hover:bg-blue-600"
+          >
+            Masuk
+          </button>
         </div>
       </div>
-
-      <div class="bg-white/70 backdrop-blur-md border border-white/60 rounded-2xl p-3 text-center shadow-md">
-        <small class="text-gray-500">Tip: Tutup & buka lagi untuk melihat pesan baru.</small>
-      </div>
-
-    </main>
-
-    <footer class="text-center text-gray-500 text-xs py-3 border-t border-white/40 backdrop-blur-md">
-      &copy; <span id="year"></span> Motivasi Cute
-    </footer>
-  </div>
-
-  <!-- MODAL DIPINDAH KE SINI! -->
-  <div id="modal" class="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center px-5">
-    <div class="w-full max-w-xs bg-white/90 rounded-xl shadow-xl p-5 border border-white/60">
-
-      <h3 class="text-gray-800 font-semibold text-base mb-1">Hai! Siapa namamu?</h3>
-      <p class="text-gray-500 text-sm mb-3">Masukkan nama agar kami bisa menyapamu dengan hangat.</p>
-
-      <div class="flex gap-2 mb-2">
-        <input id="nameInput" type="text"
-               class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300 outline-none"
-               placeholder="Nama kamu..." autocomplete="name">
-        <button id="startBtn"
-                class="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-semibold hover:bg-blue-600">
-          Masuk
-        </button>
-      </div>
-
-      <button id="skipBtn"
-              class="mt-2 w-full py-2 border border-blue-300 text-blue-600 rounded-lg text-sm font-semibold hover:bg-blue-50">
-        Lewati
-      </button>
-
     </div>
-  </div>
 
-  <script>
-    const messages = [
-      "Kamu hebat, bahkan saat kamu merasa tidak!",
-      "Sedikit demi sedikit, lama-lama menjadi bukit.",
-      "Istirahat juga produktivitas, lho.",
-      "Hari ini adalah kesempatan baru!",
-      "Kamu cukup. Kamu berharga.",
-      "Teruslah melangkah, meski kecil.",
-      "Senyummu bisa mengubah harimu!",
-    ];
+    <script>
+      /* ====================== */
+      /* 1. PESAN + GAMBAR SEKALIGUS */
+      /* ====================== */
+      const messages = [
+        {
+          text: "Hati yang gembira adalah obat yang manjur, tetapi semangat yang patah mengeringkan tulang. (Amsal 17:22)",
+          img: "img/gbr-1.jpg",
+        },
+        {
+          text: "Today may be tough, but you are much stronger than the problems you face.",
+          img: "img/gbr-2.jpg",
+        },
+        {
+          text: "Rasa lelahmu hari ini menjadi jaminan kebahagiaan mu di masa depan.",
+          img: "img/gbr-3.jpg",
+        },
+        {
+          text: "Dan apa saja yang kamu minta dalam doa dengan penuh kepercayaan, kamu akan menerimanya. (Matius 21:22)",
+          img: "img/gbr-4.jpg",
+        },
+        {
+          text: "Masalah di tempat kerja hanyalah ujian 'kenaikan kelas'. Hadapi dengan tenang agar level mental dan rezekimu naik.",
+          img: "img/gbr-5.jpg",
+        },
+        {
+          text: "Serahkanlah segala kekuatiranmu kepada-Nya, sebab Ia yang memelihara kamu (1 Petrus 5:7).",
+          img: "img/gbr-6.jpg",
+        },
+        {
+          text: "Tuhan tidak pernah tidur melihat hamba-Nya yang bekerja keras. Tetap semangat ya.",
+          img: "img/gbr-7.jpg",
+        },
+      ];
 
-    const wrapper = document.getElementById('messages-wrapper');
-    const greetingEl = document.getElementById('greeting');
-    const modal = document.getElementById('modal');
-    const nameInput = document.getElementById('nameInput');
-    const startBtn = document.getElementById('startBtn');
-    const skipBtn = document.getElementById('skipBtn');
-    const yearEl = document.getElementById('year');
+      const wrapper = document.getElementById("messages-wrapper");
+      const greetingEl = document.getElementById("greeting");
+      const modal = document.getElementById("modal");
+      const nameInput = document.getElementById("nameInput");
+      const startBtn = document.getElementById("startBtn");
+      const yearEl = document.getElementById("year");
+      const cuteImageEl = document.getElementById("cuteImage");
 
-    yearEl.textContent = new Date().getFullYear();
+      yearEl.textContent = new Date().getFullYear();
 
-    function showModal(show = true) {
-      modal.style.display = show ? 'flex' : 'none';
-      if (show) nameInput.focus();
-    }
+      function showModal(show = true) {
+        modal.style.display = show ? "flex" : "none";
+        if (show) nameInput.focus();
+      }
 
-    const storedName = localStorage.getItem('cute_name');
-    if (storedName) {
-      applyName(storedName);
-      showModal(false);
-    } else {
-      showModal(true);
-    }
+      function applyName(name) {
+        greetingEl.textContent = name ? `Halo, ${name}!` : "Halo!";
+      }
 
-    function applyName(name) {
-      greetingEl.textContent = name ? `Halo, ${name}!` : 'Halo!';
-    }
-
-    function pickRandomIndex(exclude) {
-      let idx;
-      do {
-        idx = Math.floor(Math.random() * messages.length);
-      } while (idx === exclude && messages.length > 1);
-      return idx;
-    }
-
-    let currentIdx = -1;
-    function showNextMessage() {
-      const next = pickRandomIndex(currentIdx);
-      currentIdx = next;
-
-      const el = document.createElement('div');
-      el.className = 'msg';
-      el.textContent = messages[next];
-      wrapper.appendChild(el);
-
-      requestAnimationFrame(() => el.classList.add('show'));
-
-      const others = wrapper.querySelectorAll('.msg');
-      if (others.length > 2) wrapper.removeChild(others[0]);
-
-      setTimeout(() => {
-        el.classList.remove('show');
-        setTimeout(() => el.remove(), 500);
-      }, 4000);
-    }
-
-    showNextMessage();
-    setInterval(showNextMessage, 4500);
-
-    startBtn.addEventListener('click', () => {
-      const name = nameInput.value.trim();
-      if (name) {
-        localStorage.setItem('cute_name', name);
-        applyName(name);
+      const storedName = localStorage.getItem("cute_name");
+      if (storedName) {
+        applyName(storedName);
         showModal(false);
       } else {
-        nameInput.placeholder = "Nama tidak boleh kosong...";
+        showModal(true);
       }
-    });
 
-    skipBtn.addEventListener('click', () => showModal(false));
+      function pickRandomIndex(exclude) {
+        let idx;
+        do {
+          idx = Math.floor(Math.random() * messages.length);
+        } while (idx === exclude && messages.length > 1);
+        return idx;
+      }
 
-    nameInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') startBtn.click();
-    });
-  </script>
+      /* ====================== */
+      /* 2. TAMPILKAN PESAN + FOTO KECIL */
+      /* ====================== */
+      let currentIdx = -1;
+      function showNextMessage() {
+        const idx = pickRandomIndex(currentIdx);
+        currentIdx = idx;
+        const item = messages[idx];
 
-</body>
+        const el = document.createElement("div");
+        el.className = "msg flex items-center gap-2";
+
+        el.innerHTML = `
+          <span>${item.text}</span>
+          
+        `;
+
+        wrapper.appendChild(el);
+
+        requestAnimationFrame(() => el.classList.add("show"));
+
+        const others = wrapper.querySelectorAll(".msg");
+        if (others.length > 2) wrapper.removeChild(others[0]);
+
+        // ganti gambar besar di bawah
+        changeMainImage(item.img);
+
+        setTimeout(() => {
+          el.classList.remove("show");
+          setTimeout(() => el.remove(), 500);
+        }, 4000);
+      }
+
+      /* ====================== */
+      /* 3. GANTI GAMBAR BESAR */
+      /* ====================== */
+      function changeMainImage(src) {
+        cuteImageEl.style.opacity = 0;
+        setTimeout(() => {
+          cuteImageEl.src = src;
+          cuteImageEl.style.opacity = 1;
+        }, 300);
+      }
+
+      showNextMessage();
+      setInterval(showNextMessage, 4500);
+
+      /* ====================== */
+      /* 4. EVENT MODAL */
+      /* ====================== */
+      startBtn.addEventListener("click", () => {
+        const name = nameInput.value.trim();
+        if (name) {
+          localStorage.setItem("cute_name", name);
+          applyName(name);
+          showModal(false);
+        } else {
+          nameInput.placeholder = "Nama tidak boleh kosong...";
+        }
+      });
+
+      nameInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") startBtn.click();
+      });
+
+      /* ====================== */
+      /* 5. AUTO MUSIC */
+      /* ====================== */
+      const music = document.getElementById("bgMusic");
+      music.volume = 0.25; // volume lembut
+
+      // Jika sudah pernah masuk sebelumnya (nama tersimpan), musik langsung diputar
+      if (storedName) {
+        setTimeout(() => {
+          music.play().catch(() => {});
+        }, 500);
+      }
+
+      // Jika modal belum pernah, musik diputar setelah klik "Masuk"
+      startBtn.addEventListener("click", () => {
+        const name = nameInput.value.trim();
+        if (name) {
+          setTimeout(() => {
+            music.play().catch(() => {});
+          }, 400);
+        }
+      });
+    </script>
+  </body>
 </html>
