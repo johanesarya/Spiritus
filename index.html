@@ -86,164 +86,92 @@
   </div>
 
   <script>
-  const messages = [
-    "Kamu hebat, bahkan saat kamu merasa tidak!",
-    "Sedikit demi sedikit, lama-lama menjadi bukit.",
-    "Istirahat juga produktivitas, lho.",
-    "Hari ini adalah kesempatan baru!",
-    "Kamu cukup. Kamu berharga.",
-    "Teruslah melangkah, meski kecil.",
-    "Senyummu bisa mengubah harimu!"
-  ];
+    const messages = [
+      "Kamu hebat, bahkan saat kamu merasa tidak!",
+      "Sedikit demi sedikit, lama-lama menjadi bukit.",
+      "Istirahat juga produktivitas, lho.",
+      "Hari ini adalah kesempatan baru!",
+      "Kamu cukup. Kamu berharga.",
+      "Teruslah melangkah, meski kecil.",
+      "Senyummu bisa mengubah harimu!",
+    ];
 
-  const wrapper = document.getElementById('messages-wrapper');
-  const greetingEl = document.getElementById('greeting');
-  const modal = document.getElementById('modal');
-  const nameInput = document.getElementById('nameInput');
-  const startBtn = document.getElementById('startBtn');
-  const skipBtn = document.getElementById('skipBtn');
-  const yearEl = document.getElementById('year');
+    const wrapper = document.getElementById('messages-wrapper');
+    const greetingEl = document.getElementById('greeting');
+    const modal = document.getElementById('modal');
+    const nameInput = document.getElementById('nameInput');
+    const startBtn = document.getElementById('startBtn');
+    const skipBtn = document.getElementById('skipBtn');
+    const yearEl = document.getElementById('year');
 
-  yearEl.textContent = new Date().getFullYear();
+    yearEl.textContent = new Date().getFullYear();
 
-  /* ======================
-     MODAL SEQUENCE SYSTEM
-     ====================== */
-
-  let modalQueue = [];
-  let modalRunning = false;
-
-  function showModalMessage(text) {
-    modal.querySelector("p").textContent = text;
-    modal.style.display = "flex";
-  }
-
-  function hideModal() {
-    modal.style.display = "none";
-  }
-
-  function startSequence(name) {
-    // Reset queue
-    modalQueue = [];
-
-    // Step 1: sapaan nama
-    modalQueue.push(`Halo, ${name}!`);
-
-    // Step 2: tambahkan pesan motivasi berulang tak terbatas
-    for (let i = 0; i < 50; i++) {
-      const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-      modalQueue.push(randomMsg);
+    function showModal(show = true) {
+      modal.style.display = show ? 'flex' : 'none';
+      if (show) nameInput.focus();
     }
 
-    // mulai proses berjalan
-    runModalQueue();
-  }
+    const storedName = localStorage.getItem('cute_name');
+    if (storedName) {
+      applyName(storedName);
+      showModal(false);
+    } else {
+      showModal(true);
+    }
 
-  function runModalQueue() {
-    if (modalRunning) return;
-    modalRunning = true;
+    function applyName(name) {
+      greetingEl.textContent = name ? `Halo, ${name}!` : 'Halo!';
+    }
 
-    let index = 0;
+    function pickRandomIndex(exclude) {
+      let idx;
+      do {
+        idx = Math.floor(Math.random() * messages.length);
+      } while (idx === exclude && messages.length > 1);
+      return idx;
+    }
 
-    function nextModal() {
-      if (index >= modalQueue.length) index = 0;
+    let currentIdx = -1;
+    function showNextMessage() {
+      const next = pickRandomIndex(currentIdx);
+      currentIdx = next;
 
-      showModalMessage(modalQueue[index]);
-      index++;
+      const el = document.createElement('div');
+      el.className = 'msg';
+      el.textContent = messages[next];
+      wrapper.appendChild(el);
+
+      requestAnimationFrame(() => el.classList.add('show'));
+
+      const others = wrapper.querySelectorAll('.msg');
+      if (others.length > 2) wrapper.removeChild(others[0]);
 
       setTimeout(() => {
-        hideModal();
-
-        setTimeout(() => {
-          nextModal();
-        }, 500); // jeda sebelum modal muncul lagi
-
-      }, 2500); // lama modal terbuka
+        el.classList.remove('show');
+        setTimeout(() => el.remove(), 500);
+      }, 4000);
     }
 
-    nextModal();
-  }
+    showNextMessage();
+    setInterval(showNextMessage, 4500);
 
-  /* ======================
-      NAME INPUT SYSTEM
-     ====================== */
+    startBtn.addEventListener('click', () => {
+      const name = nameInput.value.trim();
+      if (name) {
+        localStorage.setItem('cute_name', name);
+        applyName(name);
+        showModal(false);
+      } else {
+        nameInput.placeholder = "Nama tidak boleh kosong...";
+      }
+    });
 
-  function showModal(show = true) {
-    modal.style.display = show ? 'flex' : 'none';
-    if (show) nameInput.focus();
-  }
+    skipBtn.addEventListener('click', () => showModal(false));
 
-  const storedName = localStorage.getItem('cute_name');
-  if (storedName) {
-    applyName(storedName);
-    startSequence(storedName); // langsung mulai
-  } else {
-    showModal(true);
-  }
-
-  function applyName(name) {
-    greetingEl.textContent = name ? `Halo, ${name}!` : 'Halo!';
-  }
-
-  startBtn.addEventListener('click', () => {
-    const name = nameInput.value.trim();
-    if (name) {
-      localStorage.setItem('cute_name', name);
-      applyName(name);
-
-      hideModal();
-      setTimeout(() => startSequence(name), 300);
-    } else {
-      nameInput.placeholder = "Nama tidak boleh kosong...";
-    }
-  });
-
-  skipBtn.addEventListener('click', () => {
-    hideModal();
-    startSequence("Teman Baik");
-  });
-
-  nameInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') startBtn.click();
-  });
-
-
-  /* ======================
-       BUBBLE MESSAGE RANDOM
-     ====================== */
-
-  function pickRandomIndex(exclude) {
-    let idx;
-    do {
-      idx = Math.floor(Math.random() * messages.length);
-    } while (idx === exclude && messages.length > 1);
-    return idx;
-  }
-
-  let currentIdx = -1;
-  function showNextMessage() {
-    const next = pickRandomIndex(currentIdx);
-    currentIdx = next;
-
-    const el = document.createElement('div');
-    el.className = 'msg';
-    el.textContent = messages[next];
-    wrapper.appendChild(el);
-
-    requestAnimationFrame(() => el.classList.add('show'));
-
-    const others = wrapper.querySelectorAll('.msg');
-    if (others.length > 2) wrapper.removeChild(others[0]);
-
-    setTimeout(() => {
-      el.classList.remove('show');
-      setTimeout(() => el.remove(), 500);
-    }, 4000);
-  }
-
-  showNextMessage();
-  setInterval(showNextMessage, 4500);
-</script>
+    nameInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') startBtn.click();
+    });
+  </script>
 
 </body>
 </html>
