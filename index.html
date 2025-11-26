@@ -3,142 +3,103 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>Motivasi Harian — Mobile</title>
+  <title>Motivasi Harian — Cute Mode</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    /* Lock the visible design to a typical mobile viewport size while still allowing it to look good on other devices */
-    :root{
-      --bg-1:#EAF4FF; /* very light blue */
-      --bg-2:#D7EBFF;
-      --accent:#4A90E2; /* calm blue */
-      --accent-2:#2E6FBF;
-      --card:#FFFFFF;
-      --text:#0B2545;
-      --muted:#5B7DAA;
-      --radius:18px;
-      --mobile-width:380px; /* locked design width */
-      --mobile-height:780px; /* design height (visual lock) */
-      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    }
-
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));}
-
-    /* center a fixed-size mobile frame */
-    .frame{
-      width:var(--mobile-width);
-      height:var(--mobile-height);
-      margin:24px auto;
-      border-radius:28px;
-      box-shadow:0 18px 40px rgba(18,45,78,0.12);
-      overflow:hidden;
-      position:relative;
-      background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
-      border:1px solid rgba(255,255,255,0.6);
-      display:flex;flex-direction:column;
-      transform-origin:top center;
-    }
-
-    /* Make the design scale nicely on very small screens */
-    @media (max-width:420px){
-      .frame{transform:scale(calc(100vw / var(--mobile-width)));margin-top:12px}
-    }
-
-    header{
-      padding:18px 20px;
-      display:flex;align-items:center;gap:12px;
-    }
-    .logo{
-      width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;box-shadow:0 6px 18px rgba(46,111,191,0.18);
-    }
-    .title{font-size:16px;color:var(--text);font-weight:600}
-    .subtitle{font-size:12px;color:var(--muted)}
-
-    main{flex:1;padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:stretch;gap:18px}
-
-    .card{
-      background:var(--card);border-radius:16px;padding:18px;box-shadow:0 8px 18px rgba(11,37,69,0.06);
-    }
-
-    .greeting{font-size:20px;font-weight:700;color:var(--accent-2);margin-bottom:8px}
-    .message{font-size:15px;color:var(--text);min-height:56px;display:flex;align-items:center}
-
-    /* animated fade for changing messages */
+    /* Animasi fade */
     .msg {
-      opacity:0;transform:translateY(6px);transition:opacity .5s ease, transform .5s ease;position:absolute;left:0;right:0;padding:0 12px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: all .5s ease;
+      position: absolute;
+      left: 0; right: 0;
     }
-    .msg.show{opacity:1;transform:translateY(0)}
-
-    footer{padding:14px 20px;border-top:1px solid rgba(11,37,69,0.04);font-size:12px;color:var(--muted);display:flex;justify-content:center}
-
-    /* Modal overlay */
-    .overlay{position:absolute;inset:0;background:rgba(8,20,40,0.45);display:flex;align-items:center;justify-content:center;padding:20px}
-    .modal{width:100%;max-width:320px;background:linear-gradient(180deg,rgba(255,255,255,0.98),#ffffff);padding:20px;border-radius:14px;box-shadow:0 16px 30px rgba(2,16,44,0.28);border:1px solid rgba(11,37,69,0.04)}
-    .modal h3{margin:0 0 8px 0;color:var(--text);font-size:16px}
-    .modal p{margin:0 0 14px 0;color:var(--muted);font-size:13px}
-    .input-row{display:flex;gap:8px}
-    .input-row input{flex:1;padding:10px 12px;border-radius:10px;border:1px solid rgba(11,37,69,0.08);font-size:14px}
-    .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:10px;border:0;font-weight:600;cursor:pointer}
-    .btn.secondary{background:transparent;color:var(--accent-2);border:1px solid rgba(46,111,191,0.12)}
-
-    /* small helper */
-    .center{display:flex;justify-content:center}
+    .msg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
-<body>
-  <div class="frame" role="application" aria-label="Aplikasi Motivasi Mobile">
-    <header>
-      <div class="logo">MH</div>
+
+<body class="bg-gradient-to-b from-blue-100 to-pink-100 min-h-screen flex items-center justify-center p-4">
+
+  <!-- MOBILE FRAME -->
+  <div class="w-[390px] h-[780px] max-w-full rounded-3xl shadow-2xl overflow-hidden bg-white/40 backdrop-blur-lg border border-white/40 flex flex-col">
+
+    <!-- HEADER -->
+    <header class="flex items-center gap-3 px-5 py-4">
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-md">
+        MH
+      </div>
       <div>
-        <div class="title">Motivasi Harian</div>
-        <div class="subtitle">Kalem, biru, dan fokus</div>
+        <div class="font-semibold text-gray-800 text-base">Motivasi Harian</div>
+        <div class="text-xs text-gray-500">Cute, pastel, dan adem</div>
       </div>
     </header>
 
-    <main>
-      <div class="card" style="position:relative;overflow:visible;min-height:120px">
-        <div class="greeting" id="greeting">Halo!</div>
-        <div class="message" aria-live="polite">
-          <!-- messages will be injected here -->
-          <div id="messages-wrapper" style="position:relative;width:100%"></div>
+    <!-- MAIN -->
+    <main class="flex-1 px-5 flex flex-col gap-4 justify-center">
+
+      <!-- Card Motivasi -->
+      <div class="relative bg-white/70 backdrop-blur-md border border-white/60 rounded-2xl p-5 shadow-lg min-h-[130px]">
+        <div id="greeting" class="text-lg font-bold text-blue-700 mb-2">Halo!</div>
+        <div class="text-gray-700 relative min-h-[60px]">
+          <div id="messages-wrapper" class="relative w-full"></div>
         </div>
       </div>
 
-      <div class="card center">
-        <small style="color:var(--muted)">Tip: Tutup dan buka lagi untuk melihat pesan acak baru.</small>
+      <!-- Card Tip -->
+      <div class="bg-white/70 backdrop-blur-md border border-white/60 rounded-2xl p-3 text-center shadow-md">
+        <small class="text-gray-500">Tip: Tutup & buka lagi untuk melihat pesan baru.</small>
       </div>
+
     </main>
 
-    <footer>
-      &copy; <span id="year"></span> Motivasi Kalem
+    <!-- FOOTER -->
+    <footer class="text-center text-gray-500 text-xs py-3 border-t border-white/40 backdrop-blur-md">
+      &copy; <span id="year"></span> Motivasi Cute
     </footer>
 
-    <!-- Modal for asking name -->
-    <div class="overlay" id="modal" role="dialog" aria-modal="true">
-      <div class="modal">
-        <h3>Hai! Siapa namamu?</h3>
-        <p>Masukkan nama agar kami bisa menyapamu dengan hangat.</p>
-        <div class="input-row">
-          <input id="nameInput" type="text" placeholder="Nama kamu..." autocomplete="name" />
-          <button class="btn" id="startBtn">Masuk</button>
+    <!-- MODAL -->
+    <div id="modal" class="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center px-5">
+      <div class="w-full max-w-xs bg-white/90 rounded-xl shadow-xl p-5 border border-white/60">
+
+        <h3 class="text-gray-800 font-semibold text-base mb-1">Hai! Siapa namamu?</h3>
+        <p class="text-gray-500 text-sm mb-3">Masukkan nama agar kami bisa menyapamu dengan hangat.</p>
+
+        <div class="flex gap-2 mb-2">
+          <input id="nameInput" type="text"
+                 class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300 outline-none"
+                 placeholder="Nama kamu..." autocomplete="name">
+          <button id="startBtn"
+                  class="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-semibold hover:bg-blue-600">
+            Masuk
+          </button>
         </div>
-        <div style="height:8px"></div>
-        <div style="display:flex;gap:10px;justify-content:flex-end">
-          <button class="btn secondary" id="skipBtn">Lewati</button>
-        </div>
+
+        <button id="skipBtn"
+                class="mt-2 w-full py-2 border border-blue-300 text-blue-600 rounded-lg text-sm font-semibold hover:bg-blue-50">
+          Lewati
+        </button>
+
       </div>
     </div>
 
   </div>
 
+  <!-- SCRIPT -->
   <script>
     const messages = [
-      "Setiap langkah kecil mendekatkanmu ke tujuan.",
-      "Kerja konsisten hari ini adalah kemenangan kecil.",
-      "Kamu lebih kuat dari yang kamu kira.",
-      "Jangan takut gagal — itu bagian dari belajar.",
-      "Istirahat yang cukup juga bagian dari produktivitas.",
-      "Senyum singkat bisa mengubah harimu.",
-      "Fokus pada proses, bukan hanya hasil.",
-      "Satu tugas selesai = satu kemenangan.",
+      "Kamu hebat, bahkan saat kamu merasa tidak!",
+      "Sedikit demi sedikit, lama-lama menjadi bukit.",
+      "Istirahat juga produktivitas, lho.",
+      "Hari ini adalah kesempatan baru!",
+      "Kamu cukup. Kamu berharga.",
+      "Teruslah melangkah, meski kecil.",
+      "Senyummu bisa mengubah harimu!",
     ];
 
     const wrapper = document.getElementById('messages-wrapper');
@@ -151,93 +112,66 @@
 
     yearEl.textContent = new Date().getFullYear();
 
-    // helper to show modal or not
-    function showModal(show=true){
+    function showModal(show = true) {
       modal.style.display = show ? 'flex' : 'none';
-      if(show) nameInput.focus();
+      if (show) nameInput.focus();
     }
 
-    // get name from localStorage if available
-    const storedName = localStorage.getItem('mh_name');
-    if(storedName){
+    const storedName = localStorage.getItem('cute_name');
+    if (storedName) {
       applyName(storedName);
       showModal(false);
     } else {
-      // show modal on load
       showModal(true);
     }
 
-    function applyName(name){
-      const trimmed = (name||'').trim();
-      if(trimmed) greetingEl.textContent = `Halo, ${trimmed}!`;
-      else greetingEl.textContent = 'Halo!';
+    function applyName(name) {
+      greetingEl.textContent = name ? `Halo, ${name}!` : 'Halo!';
     }
 
-    function pickRandomIndex(exclude){
-      if(messages.length === 0) return 0;
+    function pickRandomIndex(exclude) {
       let idx;
-      do { idx = Math.floor(Math.random()*messages.length); } while(idx===exclude && messages.length>1);
+      do {
+        idx = Math.floor(Math.random() * messages.length);
+      } while (idx === exclude && messages.length > 1);
       return idx;
     }
 
-    // show rotating messages
     let currentIdx = -1;
-    function showNextMessage(){
+    function showNextMessage() {
       const next = pickRandomIndex(currentIdx);
       currentIdx = next;
-      // create element
+
       const el = document.createElement('div');
       el.className = 'msg';
       el.textContent = messages[next];
       wrapper.appendChild(el);
-      // show with small delay to allow transition
-      requestAnimationFrame(()=> el.classList.add('show'));
-      // remove previous messages to keep DOM small
+
+      requestAnimationFrame(() => el.classList.add('show'));
+
       const others = wrapper.querySelectorAll('.msg');
-      if(others.length>2){
-        wrapper.removeChild(others[0]);
-      }
-      // schedule next
-      // fade out the current after 4s
-      setTimeout(()=>{
+      if (others.length > 2) wrapper.removeChild(others[0]);
+
+      setTimeout(() => {
         el.classList.remove('show');
-        setTimeout(()=>{
-          if(el.parentNode) el.parentNode.removeChild(el);
-        },500);
-      },4000);
+        setTimeout(() => el.remove(), 500);
+      }, 4000);
     }
 
-    // start rotation
     showNextMessage();
-    let rotateTimer = setInterval(showNextMessage, 4500);
+    setInterval(showNextMessage, 4500);
 
-    // handlers
-    startBtn.addEventListener('click', ()=>{
-      const val = nameInput.value.trim();
-      if(val){
-        localStorage.setItem('mh_name', val);
-        applyName(val);
+    startBtn.addEventListener('click', () => {
+      const name = nameInput.value.trim();
+      if (name) {
+        localStorage.setItem('cute_name', name);
+        applyName(name);
         showModal(false);
       } else {
-        // simple validation
-        nameInput.focus();
-        nameInput.setAttribute('placeholder','Nama tidak boleh kosong...');
+        nameInput.placeholder = "Nama tidak boleh kosong...";
       }
     });
 
-    skipBtn.addEventListener('click', ()=>{
-      showModal(false);
-    });
+    skipBtn.addEventListener('click', () => showModal(false));
 
-    // allow enter key
-    nameInput.addEventListener('keydown', (e)=>{
-      if(e.key === 'Enter') startBtn.click();
-    });
-
-    // accessibility: if focus moves outside, close on Escape
-    document.addEventListener('keydown', (e)=>{
-      if(e.key === 'Escape') showModal(false);
-    });
-  </script>
-</body>
-</html>
+    nameInput.addEventListener('key
